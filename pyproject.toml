@@ -1,0 +1,23 @@
+[project]
+name = "llm-mechanics"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "anthropic>=0.104.0",
+    "httpx>=0.28.1",
+    "jupyterlab>=4.5.7",
+    "python-dotenv>=1.2.2",
+    "tiktoken>=0.13.0",
+    "zai-sdk>=0.2.2",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.14",
+]
+
+[tool.ruff.lint]
+# 忽略行太长(中文注释/字符串容易触发,不影响逻辑)
+ignore = ["E501"]
