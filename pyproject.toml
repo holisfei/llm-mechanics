@@ -8,6 +8,7 @@ dependencies = [
     "anthropic>=0.104.0",
     "httpx>=0.28.1",
     "jupyterlab>=4.5.7",
+    "openai>=2.38.0",
     "python-dotenv>=1.2.2",
     "tiktoken>=0.13.0",
     "zai-sdk>=0.2.2",
