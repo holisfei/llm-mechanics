@@ -1,41 +1,8 @@
-from zai import ZhipuAiClient
-from dotenv import load_dotenv
-from enum import Enum
-from pydantic import BaseModel
+from llm_fetcher import fetch, MessageModel, ROLE
 
-load_dotenv()
-client = ZhipuAiClient()
-
-class ROLE(str, Enum):
-    user = "user"
-    assistant = "assistant"
-
-class Usage(BaseModel):
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
-    cache_tokens: int = 0
-    total_tokens: int = 0
-
-
-class ContentModel(BaseModel):
-    content: str
-    usage: Usage
-
-class MessageModel(BaseModel):
-    role: ROLE
-    content: str
 
 messages: list[MessageModel] = []
 
-def fetch(kwargs:dict) -> ContentModel:
-    result = client.chat.completions.create(**kwargs)
-    content = result.choices[0].message.content
-    prompt_tokens = result.usage.prompt_tokens
-    completion_tokens = result.usage.completion_tokens
-    cache_tokens = result.usage.prompt_tokens_details.cached_tokens
-    total_tokens = result.usage.total_tokens
-    return ContentModel(content=content, usage=Usage(prompt_tokens,completion_tokens,cache_tokens,total_tokens))
- 
 def chat_with_no_memory(input: str):
     params:dict = {
         "model": "glm-4.5-air",
@@ -45,8 +12,7 @@ def chat_with_no_memory(input: str):
         "stream": False,
     }
     result = fetch(params)
-    log = f"提示词:{result.usage.prompt_tokens} 回复内容:{result.usage.completion_tokens} 缓存:{result.usage.cache_tokens} 共计:{result.usage.total_tokens}"
-    print(f"{result.content}\n{log}")
+    print(f"{result.content}\n{result.usage.output}")
 
 def chat_with_memory(input: str):
     messages.append(MessageModel(role=ROLE.user, content=input))
