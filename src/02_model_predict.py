@@ -10,7 +10,7 @@ client = ZhipuAiClient()
 
 # 模型是一个 token 一个 token 生成的,
 # 流式输出能让我们看到这个过程
-def stream_chat(promt: str):
+def stream_chat(prompt: str):
     # chunk 计数器
     chunk_count: int = 0
 
@@ -19,7 +19,7 @@ def stream_chat(promt: str):
             model="glm-4.5-air",
             messages=[
                 # {'role': 'system', 'content': '你是一个百科知识助手'},
-                {'role': 'user', 'content': promt},
+                {'role': 'user', 'content': prompt},
             ],
             stream=True
         )
