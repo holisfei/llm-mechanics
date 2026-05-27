@@ -30,7 +30,7 @@ def stream_chat(prompt: str):
                 prompt_tokens = chunk.usage.prompt_tokens
                 completion_tokens = chunk.usage.completion_tokens
                 total_tokens = chunk.usage.total_tokens
-                print(f"用量：token:{total_tokens}(提示词:{prompt_tokens} 回复:{completion_tokens}), chunk:{chunk_count}")
+                print(f"\n用量：token:{total_tokens}(提示词:{prompt_tokens} 回复:{completion_tokens}), chunk:{chunk_count}")
             if chunk.choices and chunk.choices[0].delta.content:
                 yield chunk.choices[0].delta.content
                 # 不能用return，return会直接结束掉函数
